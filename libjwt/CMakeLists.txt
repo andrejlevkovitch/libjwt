@@ -60,7 +60,7 @@ target_include_directories (${TARGET_NAME} PRIVATE
 
 # Need for using the project by add_subdirectory
 target_include_directories (${TARGET_NAME} INTERFACE
-  ${CMAKE_CURRENT_LIST_DIR}/include
+  ${CMAKE_CURRENT_LIST_DIR}/../include
   )
 
 if (UNIX)
