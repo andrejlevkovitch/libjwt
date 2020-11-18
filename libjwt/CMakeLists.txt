@@ -58,6 +58,11 @@ target_include_directories (${TARGET_NAME} PRIVATE
 	${CMAKE_CURRENT_BINARY_DIR}
 	)
 
+# Need for using the project by add_subdirectory
+target_include_directories (${TARGET_NAME} INTERFACE
+  ${CMAKE_CURRENT_LIST_DIR}/include
+  )
+
 if (UNIX)
 	target_compile_definitions (${TARGET_NAME} PUBLIC _GNU_SOURCE)
 endif ()
