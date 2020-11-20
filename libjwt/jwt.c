@@ -1462,14 +1462,14 @@ int jwt_add_headers(jwt_t *jwt, json_t *headers) {
   return ret ? EINVAL : 0;
 }
 
-int jwt_add_grants(jwt_t *jwt, json_t *headers) {
+int jwt_add_grants(jwt_t *jwt, json_t *grats) {
   int ret = -1;
 
-  if (headers == NULL)
+  if (grats== NULL)
     return EINVAL;
 
-  if (json_is_object(headers))
-    ret = json_object_update(jwt->grants, headers);
+  if (json_is_object(grats))
+    ret = json_object_update(jwt->grants,grats);
 
   return ret ? EINVAL : 0;
 }
