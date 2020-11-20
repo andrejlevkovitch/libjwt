@@ -20,9 +20,9 @@
 
 	#define DEPRECATED(func) __declspec(deprecated) func
 
-	#define alloca _alloca
+	#define alloca     _alloca
 	#define strcasecmp _stricmp
-	#define strdup _strdup
+	#define strdup     _strdup
 
 	#ifdef JWT_DLL_CONFIG
 		#ifdef JWT_BUILD_SHARED_LIBRARY
@@ -36,7 +36,7 @@
 
 #else
 
-	#define DEPRECATED(func) func __attribute__ ((deprecated))
+	#define DEPRECATED(func) func __attribute__((deprecated))
 	#define JWT_EXPORT
 
 #endif
@@ -72,16 +72,16 @@ typedef enum jwt_alg {
 #define JWT_ALG_INVAL JWT_ALG_TERM
 
 /** JWT Validation exception types. These are bit values. */
-#define JWT_VALIDATION_SUCCESS		0x0000
-#define JWT_VALIDATION_ERROR		0x0001	/* General failures */
-#define JWT_VALIDATION_ALG_MISMATCH	0x0002
-#define JWT_VALIDATION_EXPIRED		0x0004
-#define JWT_VALIDATION_TOO_NEW		0x0008
-#define JWT_VALIDATION_ISS_MISMATCH	0x0010
-#define JWT_VALIDATION_SUB_MISMATCH	0x0020
-#define JWT_VALIDATION_AUD_MISMATCH	0x0040
-#define JWT_VALIDATION_GRANT_MISSING	0x0080
-#define JWT_VALIDATION_GRANT_MISMATCH	0x0100
+#define JWT_VALIDATION_SUCCESS        0x0000
+#define JWT_VALIDATION_ERROR          0x0001 /* General failures */
+#define JWT_VALIDATION_ALG_MISMATCH   0x0002
+#define JWT_VALIDATION_EXPIRED        0x0004
+#define JWT_VALIDATION_TOO_NEW        0x0008
+#define JWT_VALIDATION_ISS_MISMATCH   0x0010
+#define JWT_VALIDATION_SUB_MISMATCH   0x0020
+#define JWT_VALIDATION_AUD_MISMATCH   0x0040
+#define JWT_VALIDATION_GRANT_MISSING  0x0080
+#define JWT_VALIDATION_GRANT_MISMATCH 0x0100
 
 /** JWT Memory allocation overrides */
 typedef void *(*jwt_malloc_t)(size_t);
@@ -140,8 +140,10 @@ JWT_EXPORT int jwt_new(jwt_t **jwt);
  *     signature, however, standard validation of the token is still
  *     performed.
  */
-JWT_EXPORT int jwt_decode(jwt_t **jwt, const char *token,
-	                 const unsigned char *key, int key_len);
+JWT_EXPORT int jwt_decode(jwt_t **             jwt,
+                          const char *         token,
+                          const unsigned char *key,
+                          int                  key_len);
 
 /**
  * Free a JWT object and any other resources it is using.
@@ -618,7 +620,8 @@ JWT_EXPORT void jwt_free_str(char *str);
  * @param len The length of the key data.
  * @return Returns 0 on success, valid errno otherwise.
  */
-JWT_EXPORT int jwt_set_alg(jwt_t *jwt, jwt_alg_t alg, const unsigned char *key, int len);
+JWT_EXPORT int
+jwt_set_alg(jwt_t *jwt, jwt_alg_t alg, const unsigned char *key, int len);
 
 /**
  * Get the jwt_alg_t set for this JWT object.
@@ -662,31 +665,32 @@ JWT_EXPORT jwt_alg_t jwt_str_alg(const char *alg);
  * @{
  */
 
- /**
-  * Set functions to be used for allocating and freeing memory.
-  *
-  * By default, LibJWT uses malloc, realloc, and free for memory
-  * management. This function allows the user of the library to
-  * specify its own memory management functions. This is especially
-  * useful on Windows where mismatches in runtimes across DLLs can
-  * cause problems.
-  *
-  * The caller can specify either a valid function pointer for
-  * any of the parameters or NULL to use the corresponding default
-  * allocator function.
-  *
-  * Note that this function will also set the memory allocator
-  * for the Jansson library.
-  *
-  * @param pmalloc The function to use for allocating memory or
-  *     NULL to use malloc
-  * @param prealloc The function to use for reallocating memory or
-  *     NULL to use realloc
-  * @param pfree The function to use for freeing memory or
-  *     NULL to use free
-  * @returns 0 on success or errno otherwise.
-  */
-JWT_EXPORT int jwt_set_alloc(jwt_malloc_t pmalloc, jwt_realloc_t prealloc, jwt_free_t pfree);
+/**
+ * Set functions to be used for allocating and freeing memory.
+ *
+ * By default, LibJWT uses malloc, realloc, and free for memory
+ * management. This function allows the user of the library to
+ * specify its own memory management functions. This is especially
+ * useful on Windows where mismatches in runtimes across DLLs can
+ * cause problems.
+ *
+ * The caller can specify either a valid function pointer for
+ * any of the parameters or NULL to use the corresponding default
+ * allocator function.
+ *
+ * Note that this function will also set the memory allocator
+ * for the Jansson library.
+ *
+ * @param pmalloc The function to use for allocating memory or
+ *     NULL to use malloc
+ * @param prealloc The function to use for reallocating memory or
+ *     NULL to use realloc
+ * @param pfree The function to use for freeing memory or
+ *     NULL to use free
+ * @returns 0 on success or errno otherwise.
+ */
+JWT_EXPORT int
+jwt_set_alloc(jwt_malloc_t pmalloc, jwt_realloc_t prealloc, jwt_free_t pfree);
 
 /**
  * Get functions used for allocating and freeing memory.
@@ -695,9 +699,11 @@ JWT_EXPORT int jwt_set_alloc(jwt_malloc_t pmalloc, jwt_realloc_t prealloc, jwt_f
  * @param prealloc Pointer to realloc function output variable, or NULL
  * @param pfree Pointer to free function output variable, or NULL
  */
-JWT_EXPORT void jwt_get_alloc(jwt_malloc_t *pmalloc, jwt_realloc_t *prealloc, jwt_free_t *pfree);
+JWT_EXPORT void jwt_get_alloc(jwt_malloc_t * pmalloc,
+                              jwt_realloc_t *prealloc,
+                              jwt_free_t *   pfree);
 
- /** @} */
+/** @} */
 
 /**
  * @defgroup jwt_vaildate JWT validation functions
@@ -732,8 +738,8 @@ JWT_EXPORT unsigned int jwt_validate(jwt_t *jwt, jwt_valid_t *jwt_valid);
  * finished with the object, use jwt_valid_free() to clean up the memory used by
  * it.
  *
- * @param jwt_valid Pointer to a JWT validation object pointer. Will be allocated
- *     on success.
+ * @param jwt_valid Pointer to a JWT validation object pointer. Will be
+ * allocated on success.
  * @return 0 on success, valid errno otherwise.
  *
  */
@@ -775,7 +781,8 @@ JWT_EXPORT unsigned int jwt_valid_get_status(jwt_valid_t *jwt_valid);
  * integer grants, then use jwt_valid_add_grant_int(). If you wish to add more
  * complex grants (e.g. an array), then use jwt_valid_add_grants_json().
  */
-JWT_EXPORT int jwt_valid_add_grant(jwt_valid_t *jwt_valid, const char *grant, const char *val);
+JWT_EXPORT int
+jwt_valid_add_grant(jwt_valid_t *jwt_valid, const char *grant, const char *val);
 
 /**
  * Return the value of a string required grant.
@@ -793,7 +800,8 @@ JWT_EXPORT int jwt_valid_add_grant(jwt_valid_t *jwt_valid, const char *grant, co
  * values (e.g. arrays) or use jwt_valid_get_grant_int() to get simple integer
  * values.
  */
-JWT_EXPORT const char *jwt_valid_get_grant(jwt_valid_t *jwt_valid, const char *grant);
+JWT_EXPORT const char *jwt_valid_get_grant(jwt_valid_t *jwt_valid,
+                                           const char * grant);
 
 /**
  * Add a new integer grant requirement to this JWT validation object.
@@ -807,7 +815,8 @@ JWT_EXPORT const char *jwt_valid_get_grant(jwt_valid_t *jwt_valid, const char *g
  * string grants, then use jwt_valid_add_grant(). If you wish to add more
  * complex grants (e.g. an array), then use jwt_valid_add_grants_json().
  */
-JWT_EXPORT int jwt_valid_add_grant_int(jwt_valid_t *jwt_valid, const char *grant, long val);
+JWT_EXPORT int
+jwt_valid_add_grant_int(jwt_valid_t *jwt_valid, const char *grant, long val);
 
 /**
  * Return the value of an integer required grant.
@@ -825,7 +834,8 @@ JWT_EXPORT int jwt_valid_add_grant_int(jwt_valid_t *jwt_valid, const char *grant
  * jwt_valid_get_grants_json() to get the JSON representation of more complex
  * values (e.g. arrays) or use jwt_valid_get_grant() to get string values.
  */
-JWT_EXPORT long jwt_valid_get_grant_int(jwt_valid_t *jwt_valid, const char *grant);
+JWT_EXPORT long jwt_valid_get_grant_int(jwt_valid_t *jwt_valid,
+                                        const char * grant);
 
 /**
  * Add a new boolean required grant to this JWT validation object.
@@ -844,7 +854,8 @@ JWT_EXPORT long jwt_valid_get_grant_int(jwt_valid_t *jwt_valid, const char *gran
  * string grants, then use jwt_valid_add_grant(). If you wish to add more
  * complex grants (e.g. an array), then use jwt_valid_add_grants_json().
  */
-JWT_EXPORT int jwt_valid_add_grant_bool(jwt_valid_t *jwt_valid, const char *grant, int val);
+JWT_EXPORT int
+jwt_valid_add_grant_bool(jwt_valid_t *jwt_valid, const char *grant, int val);
 
 /**
  * Return the value of an boolean required grant.
@@ -862,7 +873,8 @@ JWT_EXPORT int jwt_valid_add_grant_bool(jwt_valid_t *jwt_valid, const char *gran
  * jwt_valid_get_grants_json() to get the JSON representation of more complex
  * values (e.g. arrays) or use jwt_valid_get_grant() to get string values.
  */
-JWT_EXPORT int jwt_valid_get_grant_bool(jwt_valid_t *jwt_valid, const char *grant);
+JWT_EXPORT int jwt_valid_get_grant_bool(jwt_valid_t *jwt_valid,
+                                        const char * grant);
 
 /**
  * Add required grants from a JSON encoded object string.
@@ -874,7 +886,8 @@ JWT_EXPORT int jwt_valid_get_grant_bool(jwt_valid_t *jwt_valid, const char *gran
  * @param json String containing a JSON encoded object of grants.
  * @return Returns 0 on success, valid errno otherwise.
  */
-JWT_EXPORT int jwt_valid_add_grants_json(jwt_valid_t *jwt_valid, const char *json);
+JWT_EXPORT int jwt_valid_add_grants_json(jwt_valid_t *jwt_valid,
+                                         const char * json);
 
 /**
  * Return the value of a grant as JSON encoded object string.
@@ -888,7 +901,8 @@ JWT_EXPORT int jwt_valid_add_grants_json(jwt_valid_t *jwt_valid, const char *jso
  * @return Returns a string for the value, or NULL when not found. The
  *     returned string must be freed by the caller.
  */
-JWT_EXPORT char* jwt_valid_get_grants_json(jwt_valid_t *jwt_valid, const char *grant);
+JWT_EXPORT char *jwt_valid_get_grants_json(jwt_valid_t *jwt_valid,
+                                           const char * grant);
 
 /**
  * Delete a grant from this JWT object.
